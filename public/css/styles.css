@@ -1,0 +1,1033 @@
+/* ==========================================================================
+   ADREF-DMIS: High-Precision Monochromatic Dark Theme
+   Inspired by Blackshark.ai Geospatial Intelligence & Grok.com
+   Palette: Deep Obsidian Black, Industrial Charcoal, Graphite, Crisp White
+   ========================================================================== */
+
+:root {
+  /* Surface & Canvas Hierarchy */
+  --bg-app: #07080a;
+  --bg-surface: #0e1014;
+  --bg-surface-elevated: #14171d;
+  --bg-surface-hover: #1b1e26;
+  --bg-surface-active: #222631;
+  --bg-input: #0a0b0e;
+
+  /* Monochromatic Typography */
+  --text-primary: #f4f5f7;
+  --text-secondary: #9ea3ae;
+  --text-tertiary: #6b7280;
+  --text-dim: #4b5260;
+  --text-inverse: #07080a;
+
+  /* Tactical High-Contrast Accents (Restrained, Monochromatic) */
+  --tactical-white: #ffffff;
+  --tactical-light-grey: #e5e7eb;
+  --tactical-mid-grey: #4b5563;
+  --tactical-dark-grey: #27272a;
+
+  /* Semantic Precision Accents (Desaturated, High-Contrast) */
+  --status-critical: #ef4444;
+  --status-critical-bg: #1c1012;
+  --status-critical-border: #451a1d;
+  
+  --status-warning: #f59e0b;
+  --status-warning-bg: #1a160d;
+  --status-warning-border: #422d0c;
+
+  --status-success: #10b981;
+  --status-success-bg: #0c1813;
+  --status-success-border: #133a2a;
+
+  --status-info: #60a5fa;
+  --status-info-bg: #0f1624;
+  --status-info-border: #1d2d47;
+
+  /* Hairline Borders */
+  --border-subtle: #1c1f26;
+  --border-strong: #2a2e39;
+  --border-focus: #525866;
+
+  /* Industrial Geometry */
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 7px;
+  --radius-lg: 10px;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --------------------------------------------------------------------------
+   Top Tactical Telemetry Bar
+   -------------------------------------------------------------------------- */
+.ticker-bar {
+  background: #090a0d;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.4rem 1.5rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.74rem;
+  gap: 1.25rem;
+}
+
+.ticker-tag {
+  background: var(--status-critical-bg);
+  color: #fca5a5;
+  border: 1px solid var(--status-critical-border);
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-xs);
+  letter-spacing: 0.08em;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+.ticker-content {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.ticker-items {
+  display: inline-block;
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+}
+
+.ticker-items span {
+  margin-right: 2.25rem;
+}
+
+.ticker-items strong {
+  color: var(--tactical-white);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Header: Minimalist Defense / Aerospace Architecture
+   -------------------------------------------------------------------------- */
+.app-header {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.85rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-inner {
+  max-width: 1520px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.brand-icon {
+  width: 34px;
+  height: 34px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tactical-white);
+}
+
+.brand-text h1 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--tactical-white);
+}
+
+.brand-badge {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  background: var(--bg-surface-elevated);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-strong);
+  padding: 0.12rem 0.5rem;
+  border-radius: var(--radius-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sdg-badge {
+  display: inline-flex;
+  align-items: center;
+  background: #0f1712;
+  color: #6ee7b7;
+  border: 1px solid #1c3327;
+  padding: 0.12rem 0.5rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.65rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.brand-sub {
+  font-size: 0.74rem;
+  color: var(--text-tertiary);
+  margin-top: 0.1rem;
+}
+
+/* Header Controls */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+}
+
+.pulse-dot {
+  width: 5px;
+  height: 5px;
+  background-color: var(--status-critical);
+  border-radius: 50%;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons (High-Contrast Monochromatic - Grok & Blackshark Aesthetic)
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.42rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--radius-xs);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  font-family: inherit;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
+/* High-contrast solid white button */
+.btn-primary {
+  background: #ffffff;
+  color: #07080a;
+  border-color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: #e4e4e7;
+  border-color: #e4e4e7;
+}
+
+/* Dark charcoal technical button */
+.btn-secondary {
+  background: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-surface-hover);
+  border-color: #3e4454;
+  color: var(--tactical-white);
+}
+
+/* Restrained emergency button (dark obsidian with red border) */
+.btn-emergency {
+  background: #171012;
+  color: #fca5a5;
+  border-color: #5c1d24;
+}
+
+.btn-emergency:hover {
+  background: #231216;
+  border-color: #7f1d1d;
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   Navigation Tabs (Clean Hairline Underline)
+   -------------------------------------------------------------------------- */
+.nav-container {
+  max-width: 1520px;
+  margin: 0.75rem auto 0;
+  padding: 0 1.5rem;
+}
+
+.tabs-bar {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+  overflow-x: auto;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  padding: 0.65rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.12s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  color: var(--text-secondary);
+}
+
+.tab-btn.active {
+  color: var(--tactical-white);
+  border-bottom-color: var(--tactical-white);
+  font-weight: 600;
+}
+
+.tab-badge {
+  background: var(--bg-surface-elevated);
+  color: var(--text-secondary);
+  font-size: 0.65rem;
+  padding: 0.08rem 0.4rem;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+}
+
+.tab-btn.active .tab-badge {
+  background: #1b1e26;
+  color: var(--tactical-white);
+  border-color: var(--border-strong);
+}
+
+/* --------------------------------------------------------------------------
+   Main Content Layout
+   -------------------------------------------------------------------------- */
+.app-main {
+  max-width: 1520px;
+  margin: 1.25rem auto;
+  padding: 0 1.5rem 3rem;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+/* Layout Grids */
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 390px;
+  gap: 1.25rem;
+}
+
+.grid-3col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.grid-4col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Cards & Tactical Panels
+   -------------------------------------------------------------------------- */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 1.15rem;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.card-header h2, .card-header h3 {
+  font-size: 0.925rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--tactical-white);
+  letter-spacing: -0.01em;
+}
+
+/* --------------------------------------------------------------------------
+   Map: Geospatial High-Contrast Dark Rendering
+   -------------------------------------------------------------------------- */
+#disaster-map {
+  width: 100%;
+  height: 520px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-subtle);
+  z-index: 10;
+  background: #050608;
+}
+
+/* High-contrast monochromatic OSM filter: Obsidian oceans, dark charcoal terrain */
+.dark-tiles {
+  filter: brightness(0.65) invert(1) contrast(2.8) hue-rotate(200deg) saturate(0.12) brightness(0.85);
+}
+
+.leaflet-control-layers {
+  background: var(--bg-surface) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-strong) !important;
+  border-radius: var(--radius-xs) !important;
+  font-family: inherit !important;
+  font-size: 0.72rem !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6) !important;
+}
+
+.leaflet-control-layers-expanded {
+  padding: 8px 12px !important;
+}
+
+.leaflet-control-layers label {
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   Incidents Feed
+   -------------------------------------------------------------------------- */
+.incident-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  max-height: 520px;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+.incident-item {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.incident-item:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-surface-hover);
+}
+
+.incident-item.critical {
+  border-left: 2px solid var(--status-critical);
+}
+
+.incident-item.high {
+  border-left: 2px solid var(--status-warning);
+}
+
+.incident-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.35rem;
+}
+
+.incident-title {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--tactical-white);
+}
+
+.incident-meta {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+/* --------------------------------------------------------------------------
+   Agile Evolution Framework Section (Grok / Blackshark Precision)
+   -------------------------------------------------------------------------- */
+.evolution-hero {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.hero-text h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  color: var(--tactical-white);
+  letter-spacing: -0.01em;
+}
+
+.hero-text p {
+  color: var(--text-secondary);
+  max-width: 760px;
+  font-size: 0.825rem;
+  line-height: 1.55;
+}
+
+.evolution-cycle {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cycle-step {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.cycle-step.active {
+  border-color: var(--border-strong);
+  color: var(--tactical-white);
+  background: var(--bg-surface-hover);
+}
+
+.cycle-arrow {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: 0.85rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
+}
+
+.form-control {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 0.5rem 0.75rem;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.825rem;
+  transition: border-color 0.12s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 70px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+/* Impact Analysis Box */
+.impact-preview {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xs);
+  padding: 0.85rem 1rem;
+  margin: 1rem 0;
+}
+
+.impact-preview h4 {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--tactical-light-grey);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
+}
+
+.impact-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.65rem;
+  font-size: 0.75rem;
+}
+
+.impact-metric-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 0.45rem 0.65rem;
+  border-radius: var(--radius-xs);
+}
+
+.impact-metric-label {
+  color: var(--text-tertiary);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
+}
+
+.impact-metric-val {
+  font-weight: 600;
+  color: var(--tactical-white);
+  margin-top: 0.15rem;
+  font-family: var(--font-mono);
+}
+
+/* Evolution Cards Feed */
+.evolution-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.75rem;
+  transition: border-color 0.12s ease;
+}
+
+.evolution-card:hover {
+  border-color: var(--border-strong);
+}
+
+.ecr-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-xs);
+  background: var(--bg-surface);
+  color: var(--tactical-white);
+  border: 1px solid var(--border-strong);
+}
+
+.evolution-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 0.65rem 0;
+  background: var(--bg-surface);
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.74rem;
+}
+
+.orig-box {
+  border-left: 2px solid var(--tactical-mid-grey);
+  padding-left: 0.5rem;
+}
+
+.evolved-box {
+  border-left: 2px solid var(--tactical-white);
+  padding-left: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Jira Kanban Board (Monochrome Linear / Grok Style)
+   -------------------------------------------------------------------------- */
+.jira-header {
+  background: var(--bg-surface);
+  padding: 0.85rem 1.15rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.sprint-info h3 {
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--tactical-white);
+}
+
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.85rem;
+  overflow-x: auto;
+  min-height: 560px;
+}
+
+@media (max-width: 1200px) {
+  .kanban-board {
+    grid-template-columns: repeat(5, 260px);
+  }
+}
+
+.kanban-column {
+  background: #090a0d;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  display: flex;
+  flex-direction: column;
+  max-height: 700px;
+}
+
+.col-header {
+  padding: 0.65rem 0.85rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: var(--font-mono);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.col-tasks {
+  padding: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.task-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 0.75rem;
+  font-size: 0.78rem;
+  transition: border-color 0.12s ease;
+}
+
+.task-card:hover {
+  border-color: var(--border-strong);
+}
+
+.task-card.evolved {
+  border-left: 2px solid var(--tactical-white);
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+
+.task-key {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--tactical-white);
+  font-weight: 600;
+}
+
+.task-priority {
+  font-size: 0.62rem;
+  padding: 0.08rem 0.35rem;
+  border-radius: var(--radius-xs);
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.priority-critical { background: var(--status-critical-bg); color: #fca5a5; border: 1px solid var(--status-critical-border); }
+.priority-highest { background: var(--status-critical-bg); color: #fca5a5; border: 1px solid var(--status-critical-border); }
+.priority-high { background: var(--status-warning-bg); color: #fde68a; border: 1px solid var(--status-warning-border); }
+.priority-medium { background: var(--bg-surface-elevated); color: var(--text-secondary); border: 1px solid var(--border-strong); }
+.priority-low { background: var(--bg-surface-elevated); color: var(--text-tertiary); border: 1px solid var(--border-subtle); }
+
+.task-title {
+  color: var(--tactical-white);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.task-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.68rem;
+  color: var(--text-tertiary);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.35rem;
+  font-family: var(--font-mono);
+}
+
+.task-assignee {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--text-secondary);
+}
+
+.task-points {
+  background: var(--bg-surface-elevated);
+  padding: 0.08rem 0.35rem;
+  border-radius: var(--radius-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+
+.task-actions {
+  display: flex;
+  gap: 0.35rem;
+  margin-top: 0.45rem;
+}
+
+.task-btn {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.68rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all 0.12s;
+  font-family: var(--font-mono);
+}
+
+.task-btn:hover {
+  color: var(--tactical-white);
+  border-color: var(--border-strong);
+}
+
+/* --------------------------------------------------------------------------
+   Analytics & Metrics Section
+   -------------------------------------------------------------------------- */
+.kpi-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.kpi-title {
+  font-size: 0.68rem;
+  color: var(--text-tertiary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: var(--font-mono);
+  margin-bottom: 0.25rem;
+}
+
+.kpi-val {
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--tactical-white);
+  letter-spacing: -0.02em;
+  font-family: var(--font-mono);
+}
+
+.kpi-sub {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-top: 0.15rem;
+}
+
+/* Tables */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  text-align: left;
+}
+
+.custom-table th {
+  background: var(--bg-surface-elevated);
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.custom-table td {
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.custom-table tr:hover td {
+  background: var(--bg-surface-elevated);
+}
+
+/* --------------------------------------------------------------------------
+   Architecture / Diagram Box
+   -------------------------------------------------------------------------- */
+.diagram-box {
+  background: #050608;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 1.15rem;
+  margin-bottom: 1.15rem;
+  overflow-x: auto;
+}
+
+.diagram-caption {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  margin-top: 0.5rem;
+  text-align: center;
+  font-family: var(--font-mono);
+}
+
+/* --------------------------------------------------------------------------
+   Modal Window
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  width: 90%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.25rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+}
+
+/* --------------------------------------------------------------------------
+   Toast Notifications
+   -------------------------------------------------------------------------- */
+.toast-container {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 3000;
+}
+
+.toast {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.78rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  font-family: var(--font-mono);
+}
+
+@media (max-width: 900px) {
+  .grid-2col {
+    grid-template-columns: 1fr;
+  }
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

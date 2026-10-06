@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADREF-DMIS | Disaster Management Information System</title>
+  <meta name="description" content="Agile Requirement Evolution Framework for Disaster Management Information System (DMIS) - SDG 13 Climate Action">
+  
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet CSS for GIS Mapping -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  
+  <!-- Custom Minimalist Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Chart.js & Mermaid CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+<body>
+
+  <!-- Top Early Warning Status Bar -->
+  <div class="ticker-bar">
+    <div class="ticker-tag">Active Advisory</div>
+    <div class="ticker-content">
+      <div class="ticker-items" id="live-alert-ticker">
+        <span><strong>Cyclone Warning:</strong> Super Cyclone Vayu approaching Sector 4 Coastal Zone (Wind: 185 km/h)</span>
+        <span><strong>Flood Warning:</strong> River Basin Inundation in District 3 (Discharge: 45,000 cusecs)</span>
+        <span><strong>Heat Advisory:</strong> Inland Thermal Index at 47.5°C</span>
+        <span><strong>Framework Status:</strong> Rapid Adaptation Protocol Active</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-section">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>
+            ADREF-DMIS
+            <span class="brand-badge">Agile Evolution</span>
+            <span class="sdg-badge">SDG 13: Climate Action</span>
+          </h1>
+          <p class="brand-sub">Agile Requirement Evolution Framework for Disaster Management Information Systems</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="status-pill">
+          <div class="pulse-dot"></div>
+          <span>Crisis Cycle Active</span>
+        </div>
+
+        <button class="btn btn-emergency" id="btn-open-ecr">
+          + Emergency Change Request
+        </button>
+
+        <button class="btn btn-secondary" id="btn-export-audit">
+          Export Audit Report
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <div class="nav-container">
+    <nav class="tabs-bar">
+      <button class="tab-btn active" data-tab="tab-map">
+        Spatial Command & Triage
+        <span class="tab-badge" id="incident-count-badge">4</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-evolution">
+        Requirement Evolution (AREE)
+        <span class="tab-badge" id="ecr-count-badge">3</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-jira">
+        Jira Sprint Backlog
+        <span class="tab-badge">Sprint-04</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-analytics">
+        System Metrics & Traceability
+      </button>
+      <button class="tab-btn" data-tab="tab-docs">
+        Software Architecture & UML
+      </button>
+    </nav>
+  </div>
+
+  <!-- Main Container -->
+  <main class="app-main">
+
+    <!-- ================= TAB 1: GIS DISASTER MAP & INCIDENT COMMAND ================= -->
+    <section id="tab-map" class="tab-pane active">
+      <div class="grid-2col">
+        <!-- Map Card -->
+        <div class="card">
+          <div class="card-header">
+            <h2>Spatial Command Overview</h2>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <select id="map-region-select" class="form-control" style="width: auto; padding: 0.35rem 0.65rem; font-size: 0.75rem; background: var(--bg-surface-elevated); border-color: var(--border-strong); color: var(--text-primary); font-family: var(--font-mono);">
+                <option value="coastal">Landfall Sector (AP / Bay of Bengal)</option>
+                <option value="india">Pan-India Hazard Overview</option>
+                <option value="global">Global Climate Action (SDG 13)</option>
+              </select>
+              <button class="btn btn-secondary" id="btn-recenter-map">Reset</button>
+              <button class="btn btn-primary" id="btn-report-incident">+ Log Incident</button>
+            </div>
+          </div>
+          <div id="disaster-map"></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; font-size: 0.72rem; color: var(--text-tertiary);">
+            <div>Legend: Red = Breach / Surge Hazard | Amber = Logistics Risk | Green = Safe Shelters</div>
+            <div>Projection: WGS 84 / Standard GIS Tiles (No API key required)</div>
+          </div>
+        </div>
+
+        <!-- Incidents Feed -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Active Incidents Log</h3>
+            <span class="brand-badge" id="incidents-live-tag">4 Active</span>
+          </div>
+          <div class="incident-list" id="incidents-container">
+            <!-- Dynamic Incident items rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 2: AGILE REQUIREMENT EVOLUTION ENGINE (AREE) ================= -->
+    <section id="tab-evolution" class="tab-pane">
+      <div class="evolution-hero">
+        <div class="hero-text">
+          <h2>Agile Requirement Evolution Engine (AREE)</h2>
+          <p>
+            Climate hazards cause rapid operational shifts in the field (e.g. breached access roads, power grid failures, or shelter triage constraints). 
+            AREE captures dynamic Field Change Requests (FCR), algorithmically calculates technical risk, effort, and life-safety gains, and directly injects adapted user stories into active Agile sprints.
+          </p>
+        </div>
+        <div class="evolution-cycle">
+          <div class="cycle-step active">1. Sense Hazard</div>
+          <div class="cycle-arrow">➔</div>
+          <div class="cycle-step active">2. Impact Analysis</div>
+          <div class="cycle-arrow">➔</div>
+          <div class="cycle-step active">3. Sprint Injection</div>
+          <div class="cycle-arrow">➔</div>
+          <div class="cycle-step active">4. Field Deployment</div>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <!-- New ECR Submission Card -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Submit Field Change Request (FCR / ECR)</h3>
+            <span class="status-pill" style="font-size: 0.68rem;">Continuous Triage</span>
+          </div>
+
+          <form id="form-ecr">
+            <div class="form-group">
+              <label for="ecr-title">Emergency Requirement Title</label>
+              <input type="text" id="ecr-title" class="form-control" placeholder="e.g. Dynamic UAV Drone Telemetry for Inundated Arterial Routes" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="ecr-requester">Requester Role</label>
+                <select id="ecr-requester" class="form-control">
+                  <option value="First Responder (Field Triage)">First Responder (Field Triage)</option>
+                  <option value="Incident Commander (Emergency Operations)">Incident Commander (Emergency Operations)</option>
+                  <option value="Relief NGO Coordinator (Red Cross/Oxfam)">Relief NGO Coordinator (Red Cross/Oxfam)</option>
+                  <option value="Meteorological & Climate Officer">Meteorological & Climate Officer</option>
+                  <option value="Affected Community Representative">Affected Community Representative</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="ecr-urgency">Urgency Level</label>
+                <select id="ecr-urgency" class="form-control">
+                  <option value="EMERGENCY_CRITICAL">Critical (Immediate Hazard to Life)</option>
+                  <option value="HIGH" selected>High (Major Operational Impediment)</option>
+                  <option value="MODERATE">Moderate (Process Optimization)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="ecr-trigger">Disaster Operational Trigger</label>
+              <input type="text" id="ecr-trigger" class="form-control" placeholder="e.g. Primary route scoured by storm surge, cellular microcell down" required>
+            </div>
+
+            <div class="form-group">
+              <label for="ecr-orig">Original Existing Specification</label>
+              <textarea id="ecr-orig" class="form-control" placeholder="Current baseline requirement or workflow..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="ecr-evolved">Evolved Agile Requirement</label>
+              <textarea id="ecr-evolved" class="form-control" placeholder="Adapted capability required for immediate field execution..." required></textarea>
+            </div>
+
+            <!-- Automated Impact Analysis Preview -->
+            <div class="impact-preview">
+              <h4>Automated Feasibility & Impact Analysis</h4>
+              <div class="impact-metrics-grid">
+                <div class="impact-metric-item">
+                  <div class="impact-metric-label">Estimated Effort</div>
+                  <div class="impact-metric-val" id="impact-points">2 Story Points</div>
+                </div>
+                <div class="impact-metric-item">
+                  <div class="impact-metric-label">Architectural Risk</div>
+                  <div class="impact-metric-val" style="color: #34d399;" id="impact-risk">Low (Modular)</div>
+                </div>
+                <div class="impact-metric-item">
+                  <div class="impact-metric-label">SDG 13 Safety Value</div>
+                  <div class="impact-metric-val" style="color: #60a5fa;" id="impact-safety">9.4 / 10</div>
+                </div>
+                <div class="impact-metric-item">
+                  <div class="impact-metric-label">Target Cycle</div>
+                  <div class="impact-metric-val" style="color: #93c5fd;">Active Sprint-04</div>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.6rem;">
+              Approve & Inject into Active Sprint
+            </button>
+          </form>
+        </div>
+
+        <!-- ECR Feed & History -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Requirement Evolution Log</h3>
+            <span class="brand-badge" id="ecr-active-counter">3 Evolved Stories</span>
+          </div>
+
+          <div id="ecr-feed-container" style="max-height: 620px; overflow-y: auto; padding-right: 0.25rem;">
+            <!-- Dynamic ECR cards rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 3: JIRA KANBAN SPRINT BOARD ================= -->
+    <section id="tab-jira" class="tab-pane">
+      <div class="jira-header">
+        <div class="sprint-info">
+          <h3>Jira Sprint Board: SPRINT-CRISIS-04</h3>
+          <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 0.15rem;">
+            Cycle Goal: Mitigate coastal cyclone surge inundation and power disruptions within a 4-hour adaptation loop.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; align-items: center;">
+          <div style="font-size: 0.75rem; background: var(--bg-surface-elevated); padding: 0.35rem 0.65rem; border-radius: var(--radius-xs); border: 1px solid var(--border-subtle); color: var(--text-secondary);">
+            Sprint Velocity: <strong>34 SP</strong> | Burndown: <strong>On Track</strong>
+          </div>
+          <button class="btn btn-secondary" id="btn-add-jira-task">+ New Story</button>
+        </div>
+      </div>
+
+      <!-- 5-Column Kanban Board -->
+      <div class="kanban-board">
+        <!-- Col 1: Backlog -->
+        <div class="kanban-column" data-col="backlog">
+          <div class="col-header">
+            <span>Backlog</span>
+            <span class="tab-badge" id="badge-backlog">0</span>
+          </div>
+          <div class="col-tasks" id="tasks-backlog"></div>
+        </div>
+
+        <!-- Col 2: To Do / Ready for Sprint -->
+        <div class="kanban-column" data-col="todo">
+          <div class="col-header">
+            <span>Sprint Ready</span>
+            <span class="tab-badge" id="badge-todo">0</span>
+          </div>
+          <div class="col-tasks" id="tasks-todo"></div>
+        </div>
+
+        <!-- Col 3: In Progress (Rapid Dev) -->
+        <div class="kanban-column" data-col="in_progress">
+          <div class="col-header">
+            <span>In Rapid Dev</span>
+            <span class="tab-badge" id="badge-in_progress">0</span>
+          </div>
+          <div class="col-tasks" id="tasks-in_progress"></div>
+        </div>
+
+        <!-- Col 4: Testing & Verification -->
+        <div class="kanban-column" data-col="testing">
+          <div class="col-header">
+            <span>Field QA / Testing</span>
+            <span class="tab-badge" id="badge-testing">0</span>
+          </div>
+          <div class="col-tasks" id="tasks-testing"></div>
+        </div>
+
+        <!-- Col 5: Field Deployed (Done) -->
+        <div class="kanban-column" data-col="done">
+          <div class="col-header">
+            <span>Field Deployed (Done)</span>
+            <span class="tab-badge" id="badge-done">0</span>
+          </div>
+          <div class="col-tasks" id="tasks-done"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 4: FRAMEWORK ANALYTICS & INTERPRETATION (SDG 13) ================= -->
+    <section id="tab-analytics" class="tab-pane">
+      <div class="grid-4col" style="margin-bottom: 1.25rem;">
+        <div class="kpi-card">
+          <div class="kpi-title">Turnaround Time for New Needs</div>
+          <div class="kpi-val" style="color: #60a5fa;">2.4 hrs</div>
+          <div class="kpi-sub">Reduced from 168h in Waterfall</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Operational Field Relevance</div>
+          <div class="kpi-val" style="color: #34d399;">96.8%</div>
+          <div class="kpi-sub">+58% improvement over static systems</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Failed Dispatch Rate</div>
+          <div class="kpi-val" style="color: #f87171;">2.1%</div>
+          <div class="kpi-sub">Decreased from 28.5%</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">SDG 13 Preparedness Index</div>
+          <div class="kpi-val" style="color: #fbbf24;">94.2 / 100</div>
+          <div class="kpi-sub">Target 13.1 Resilience Threshold Met</div>
+        </div>
+      </div>
+
+      <div class="grid-2col" style="margin-bottom: 1.25rem;">
+        <!-- Turnaround Comparison Chart -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Turnaround Time Comparison (Hours)</h3>
+            <span class="brand-badge">Benchmarking</span>
+          </div>
+          <div style="height: 270px; position: relative;">
+            <canvas id="chart-turnaround"></canvas>
+          </div>
+          <p style="font-size: 0.72rem; color: var(--text-tertiary); margin-top: 0.5rem;">
+            Empirical benchmark comparing requirement adaptation latency under acute hazard dynamics.
+          </p>
+        </div>
+
+        <!-- Field Relevance & Success Chart -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Multi-Dimensional Performance Radar</h3>
+            <span class="brand-badge">Evaluation</span>
+          </div>
+          <div style="height: 270px; position: relative;">
+            <canvas id="chart-relevance"></canvas>
+          </div>
+          <p style="font-size: 0.72rem; color: var(--text-tertiary); margin-top: 0.5rem;">
+            Assessment across field relevance, adaptation velocity, resource efficiency, and SDG compliance.
+          </p>
+        </div>
+      </div>
+
+      <!-- Traceability Matrix -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Requirement Traceability Matrix (RTM) - SDG 13 Alignment</h3>
+          <span class="status-pill" style="font-size: 0.68rem;">Verified Traceable</span>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>SDG 13 Target</th>
+                <th>Disaster Operational Need</th>
+                <th>Evolved Agile User Story</th>
+                <th>Story ID</th>
+                <th>Story Points</th>
+                <th>Validation Metric</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>SDG 13.1</strong> (Strengthen Resilience)</td>
+                <td>Coastal embankment breach & road scouring</td>
+                <td>UAV Drone video telemetry layer on GIS map</td>
+                <td><code>SEP-101</code></td>
+                <td>2 SP</td>
+                <td>Latency &lt; 500ms; 0 misdirected boats</td>
+                <td><span class="brand-badge" style="background: rgba(16,185,129,0.15); color: #34d399;">Deployed</span></td>
+              </tr>
+              <tr>
+                <td><strong>SDG 13.1</strong> (Strengthen Resilience)</td>
+                <td>Cellular base-station blackout during cyclone</td>
+                <td>Offline SMS-token supply handshake & IndexedDB sync</td>
+                <td><code>SEP-102</code></td>
+                <td>3 SP</td>
+                <td>100% data sync upon reconnection</td>
+                <td><span class="brand-badge" style="background: rgba(245,158,11,0.15); color: #fbbf24;">In Progress</span></td>
+              </tr>
+              <tr>
+                <td><strong>SDG 13.3</strong> (Climate Education & Capacity)</td>
+                <td>Vulnerable population overcrowding at shelters</td>
+                <td>Pediatric & Geriatric weighted triage scoring algorithm</td>
+                <td><code>SEP-098</code></td>
+                <td>1 SP</td>
+                <td>Zero critical medical delays at shelters</td>
+                <td><span class="brand-badge" style="background: rgba(16,185,129,0.15); color: #34d399;">Deployed</span></td>
+              </tr>
+              <tr>
+                <td><strong>SDG 13.1</strong> (Early Warning)</td>
+                <td>Flash flood river discharge surge</td>
+                <td>Automated Satellite InSAR polygon & hydrological ingest</td>
+                <td><code>SEP-105</code></td>
+                <td>5 SP</td>
+                <td>Early alert issued &gt; 4 hrs before breach</td>
+                <td><span class="brand-badge" style="background: rgba(59,130,246,0.15); color: #60a5fa;">Backlog</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 5: ARCHITECTURE & UML SPECIFICATIONS ================= -->
+    <section id="tab-docs" class="tab-pane">
+      <div class="card" style="margin-bottom: 1.25rem;">
+        <div class="card-header">
+          <h2>Software Architecture & Agile Evolution Specifications</h2>
+          <span class="brand-badge">Academic Reference</span>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem;">
+          Four-tier reactive architecture integrating GIS Spatial Intelligence, Agile Requirement Sensing, automated impact grading, and dynamic Sprint backlog reconciliation.
+        </p>
+
+        <!-- Diagram 1: Agile Evolution Lifecycle -->
+        <div class="diagram-box">
+          <h4 style="color: #93c5fd; margin-bottom: 0.65rem; font-size: 0.825rem;">1. Agile Disaster Requirement Evolution Lifecycle (ADREF Cycle)</h4>
+          <pre class="mermaid">
+flowchart LR
+    A[Disaster Event / Field Shift] --> B[Field Change Request - FCR]
+    B --> C{AREE Engine Impact Analysis}
+    C -->|High Urgency & Safety Gain| D[Emergency Sprint Backlog Injection]
+    C -->|Moderate Impact| E[Next Sprint Planning Backlog]
+    D --> F[Rapid Dev Swarm - 2hr Spike]
+    F --> G[Automated Micro-Test QA]
+    G --> H[Hot-Deploy to Field Responders]
+    H --> I[Continuous Field Feedback Loop]
+    I --> A
+          </pre>
+          <div class="diagram-caption">Figure 1: Closed-loop Agile Requirement Evolution Cycle under Climate Crisis Conditions</div>
+        </div>
+
+        <!-- Diagram 2: System Architecture (C4 Container View) -->
+        <div class="diagram-box">
+          <h4 style="color: #93c5fd; margin-bottom: 0.65rem; font-size: 0.825rem;">2. System Architecture (Component / C4 Model)</h4>
+          <pre class="mermaid">
+graph TD
+    subgraph ClientLayer["Presentation & Field Triage Layer"]
+        UI[GIS Spatial Dashboard]
+        KANBAN[Jira-Style Agile Sprint Board]
+        EVOL[Requirement Evolution Portal]
+    end
+
+    subgraph ServiceLayer["ADREF Micro-Core Services"]
+        AUTH[Role & Token Manager]
+        AREE[Agile Requirement Evolution Engine]
+        TRIAGE[Dynamic Triage & Resource Dispatcher]
+        ALERT[Early Warning Alert Ingestion]
+    end
+
+    subgraph StorageLayer["Data & Persistence"]
+        SQL[(Spatial Disaster Store - GeoJSON)]
+        BACKLOG[(Agile Backlog & Traceability Store)]
+        CACHE[(Offline IndexedDB / Sync Cache)]
+    end
+
+    UI --> AREE
+    KANBAN --> BACKLOG
+    EVOL --> AREE
+    AREE --> BACKLOG
+    ALERT --> SQL
+    TRIAGE --> SQL
+    UI --> CACHE
+          </pre>
+          <div class="diagram-caption">Figure 2: Component Architecture of the Adaptable Collaborative DMIS</div>
+        </div>
+
+        <!-- Diagram 3: Use Case Diagram -->
+        <div class="diagram-box">
+          <h4 style="color: #93c5fd; margin-bottom: 0.65rem; font-size: 0.825rem;">3. Use Case Diagram (Collaborative Stakeholders)</h4>
+          <pre class="mermaid">
+flowchart TB
+    FR((First Responder))
+    IC((Incident Commander))
+    SM((Agile Scrum Master))
+    CA((Climate Analyst))
+
+    subgraph DMIS_System["Disaster Management Information System (DMIS)"]
+        UC1([Submit Emergency Change Request])
+        UC2([View Real-Time Spatial Hazards])
+        UC3([Approve Sprint Story Injection])
+        UC4([Dispatch Rescue & Medical Resources])
+        UC5([Monitor SDG 13 Resilience Metrics])
+        UC6([Reconcile Offline Data Sync])
+    end
+
+    FR --> UC1
+    FR --> UC2
+    FR --> UC6
+    IC --> UC3
+    IC --> UC4
+    IC --> UC2
+    SM --> UC3
+    CA --> UC5
+    CA --> UC2
+          </pre>
+          <div class="diagram-caption">Figure 3: Multi-role Use Case Model highlighting collaborative requirement evolution</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= MODAL: NEW INCIDENT LOG ================= -->
+  <div class="modal-overlay" id="modal-incident">
+    <div class="modal-box">
+      <div class="card-header">
+        <h3>Log Climate Disaster Incident</h3>
+        <button class="task-btn" id="modal-incident-close">Close</button>
+      </div>
+      <form id="form-new-incident">
+        <div class="form-group">
+          <label>Incident Headline</label>
+          <input type="text" id="inc-title" class="form-control" placeholder="e.g. Flash flood inundation of Zone B shelter" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Incident Type</label>
+            <select id="inc-type" class="form-control">
+              <option value="Flood/Surge">Flood / Storm Surge</option>
+              <option value="Cyclone Impact">High Wind / Cyclone Damage</option>
+              <option value="Infrastructure Collapse">Bridge / Road Structural Scour</option>
+              <option value="Water & Sanitation">Contaminated Water Emergency</option>
+              <option value="Extreme Heat">Extreme Heat Mass Triage</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Severity Level</label>
+            <select id="inc-severity" class="form-control">
+              <option value="Critical">Critical (Immediate Rescue Needed)</option>
+              <option value="High">High</option>
+              <option value="Moderate">Moderate</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Latitude (approx 17.6 - 17.8)</label>
+            <input type="number" step="0.001" id="inc-lat" class="form-control" value="17.7150" required>
+          </div>
+          <div class="form-group">
+            <label>Longitude (approx 83.2 - 83.35)</label>
+            <input type="number" step="0.001" id="inc-lng" class="form-control" value="83.2800" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Affected Population</label>
+          <input type="number" id="inc-pop" class="form-control" value="1500" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;">
+          Dispatch & Log Incident
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- JavaScript App Logic -->
+  <script src="js/app.js"></script>
+</body>
+</html>
