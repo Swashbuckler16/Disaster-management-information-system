@@ -1,7 +1,6 @@
 # Software Architecture & UML Specifications
 ## Topic: Agile Requirement Evolution Framework for a Disaster Management Information System (DMIS)
-### Aligned with UN SDG 13: Climate Action
-### Prepared for Software Engineering Practices (SEP) - CIAP Micro Project
+### Enterprise Architecture Specification | Multi-Stakeholder Collaboration Model
 
 ---
 
