@@ -1,0 +1,11 @@
+services:
+  dmis-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dmis-server
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000

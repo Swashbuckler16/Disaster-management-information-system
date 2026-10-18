@@ -55,8 +55,13 @@ Disaster-management-information-system/
 git clone https://github.com/Swashbuckler16/Disaster-management-information-system.git
 cd Disaster-management-information-system
 
-# Start the server (Option A: Double-click run_dmis.bat, or Option B: Run in terminal)
+# Start the server:
+# Option A: Double-click run_dmis.bat
+# Option B: Run in terminal
 python server.py
+
+# Option C: Run with Docker Compose
+docker compose up -d --build
 ```
 Navigate to **`http://localhost:8000`** in your browser.
 
