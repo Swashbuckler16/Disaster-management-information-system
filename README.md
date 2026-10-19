@@ -67,6 +67,23 @@ Navigate to **`http://localhost:8000`** in your browser.
 
 ---
 
+## ☁️ Cloud Infrastructure & Deployment (Infrastructure as Code)
+
+### Architecture Evolution: Serverless Edge Infrastructure via Terraform
+While initial architectural exploration evaluated traditional cloud virtual machine hosting (such as standalone IaaS virtual instances), rapid disaster emergency response demands zero cold-start provisioning, instantaneous global availability, and resilience against localized network outages. Furthermore, traditional cloud virtual machine architectures impose rigid billing verification barriers, regional egress caps, and single-point-of-failure constraints that are suboptimal for agile, open-source humanitarian systems.
+
+To achieve maximum fault tolerance, zero-friction deployment, and edge scalability without administrative bottlenecks, the production deployment was transitioned to a modern Serverless Edge deployment architecture on **Vercel**, managed declaratively via **Terraform (Infrastructure as Code)**. 
+
+Using the official HashiCorp-partnered `vercel/vercel` Terraform provider, the deployment pipeline automates project orchestration, edge routing, and continuous delivery directly from Git version control with zero manual console interventions:
+
+```bash
+# Provision cloud infrastructure using Terraform
+.\terraform.bat init
+.\terraform.bat apply
+```
+
+---
+
 ## 🧭 Core Operational Modules
 
 1. **Spatial Command Overview (GIS Map)**:
