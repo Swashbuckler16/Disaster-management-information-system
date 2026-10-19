@@ -54,17 +54,18 @@ pipeline {
                 script {
                     if (isUnix()) {
                         sh '''
-                            docker run -d --name dmis-ci-test -p 8080:8000 ${APP_IMAGE}:${APP_TAG}
-                            sleep 4
-                            curl --fail http://localhost:8080/api/all || exit 1
+                            docker run -d --name dmis-ci-test ${APP_IMAGE}:${APP_TAG}
+                            sleep 3
+                            CONTAINER_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dmis-ci-test)
+                            curl --fail http://${CONTAINER_IP}:8000/api/all || exit 1
                             docker stop dmis-ci-test
                             docker rm dmis-ci-test
                         '''
                     } else {
                         bat '''
-                            docker run -d --name dmis-ci-test -p 8080:8000 %APP_IMAGE%:%APP_TAG%
-                            timeout /t 4 /nobreak
-                            powershell -Command "Invoke-RestMethod -Uri 'http://localhost:8080/api/all'"
+                            docker run -d --name dmis-ci-test -p 8085:8000 %APP_IMAGE%:%APP_TAG%
+                            timeout /t 3 /nobreak
+                            powershell -Command "Invoke-RestMethod -Uri 'http://localhost:8085/api/all'"
                             docker stop dmis-ci-test
                             docker rm dmis-ci-test
                         '''
@@ -78,9 +79,9 @@ pipeline {
                 echo "Deploying DMIS Application container with Docker Compose..."
                 script {
                     if (isUnix()) {
-                        sh 'docker compose up -d --build'
+                        sh 'docker compose -p dmis up -d --build'
                     } else {
-                        bat 'docker compose up -d --build'
+                        bat 'docker compose -p dmis up -d --build'
                     }
                 }
             }
