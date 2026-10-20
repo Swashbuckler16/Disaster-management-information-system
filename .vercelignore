@@ -1,0 +1,10 @@
+.terraform/
+.git/
+.dockerignore
+Dockerfile
+docker-compose.yml
+Jenkinsfile
+terraform/
+terraform.bat
+docs/
+*.bat
