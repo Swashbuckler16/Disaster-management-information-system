@@ -29,5 +29,4 @@ override.tf.json
 *_override.tf
 .terraformrc
 terraform.rc
-.vercel
 trivy.bat
