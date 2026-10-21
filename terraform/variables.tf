@@ -1,12 +1,31 @@
-variable "vercel_api_token" {
-  description = "Vercel API Token (generated for free at vercel.com/account/tokens)"
+variable "aws_region" {
+  description = "AWS deployment region"
+  type        = string
+  default     = "us-east-1"
+}
+
+variable "instance_type" {
+  description = "EC2 Instance Type (free-tier eligible)"
+  type        = string
+  default     = "t3.micro"
+}
+
+variable "project_name" {
+  description = "Project Name identifier"
+  type        = string
+  default     = "dmis-disaster-system"
+}
+
+variable "aws_access_key" {
+  description = "AWS Access Key ID"
   type        = string
   sensitive   = true
   default     = ""
 }
 
-variable "project_name" {
-  description = "Vercel Project Name"
+variable "aws_secret_key" {
+  description = "AWS Secret Access Key"
   type        = string
-  default     = "dmis-disaster-system"
+  sensitive   = true
+  default     = ""
 }

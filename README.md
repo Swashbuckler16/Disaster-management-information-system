@@ -69,18 +69,24 @@ Navigate to **`http://localhost:8000`** in your browser.
 
 ## ☁️ Cloud Infrastructure & Deployment (Infrastructure as Code)
 
-### Architecture Evolution: Serverless Edge Infrastructure via Terraform
-While initial architectural exploration evaluated traditional cloud virtual machine hosting (such as standalone IaaS virtual instances), rapid disaster emergency response demands zero cold-start provisioning, instantaneous global availability, and resilience against localized network outages. Furthermore, traditional cloud virtual machine architectures impose rigid billing verification barriers, regional egress caps, and single-point-of-failure constraints that are suboptimal for agile, open-source humanitarian systems.
+### AWS EC2 Cloud Infrastructure via Terraform
+The production infrastructure for ADREF-DMIS is provisioned declaratively on **Amazon Web Services (AWS)** using **Terraform (Infrastructure as Code)** with the official `hashicorp/aws` provider (~> 5.0).
 
-To achieve maximum fault tolerance, zero-friction deployment, and edge scalability without administrative bottlenecks, the production deployment was transitioned to a modern Serverless Edge deployment architecture on **Vercel**, managed declaratively via **Terraform (Infrastructure as Code)**. 
-
-Using the official HashiCorp-partnered `vercel/vercel` Terraform provider, the deployment pipeline automates project orchestration, edge routing, and continuous delivery directly from Git version control with zero manual console interventions:
+#### Architecture Highlights:
+- **Compute**: AWS EC2 instance (`t3.micro` Free-Tier eligible) running Ubuntu 24.04 LTS (Noble Numbat).
+- **Networking & Security**: Custom Security Group configured in the Default VPC with controlled ingress rules (HTTP port 80, DMIS Application port 8000, and SSH port 22) and unrestricted outbound egress.
+- **Automated Containerized Bootstrapping (`user_data.sh`)**: Fully automated cloud-init provisioning that installs Docker Engine and Docker Compose, clones the repository, launches the containerized stack via `docker compose`, and establishes kernel-level NAT port redirection (`80 -> 8000`).
+- **High Availability & Secrets Isolation**: Sensitive credentials are kept strictly out of version control using local `terraform.tfvars` (safeguarded via `.gitignore`).
 
 ```bash
-# Provision cloud infrastructure using Terraform
+# Provision AWS infrastructure using Terraform
 .\terraform.bat init
 .\terraform.bat apply
 ```
+
+**Live Deployment Endpoint**:
+- **AWS EC2 Production URL**: `http://44.197.200.188:8000` (or standard `http://44.197.200.188`)
+- **API Health Endpoint**: `http://44.197.200.188:8000/api/status`
 
 ---
 

@@ -1,8 +1,7 @@
 @echo off
-REM Terraform Docker wrapper script for Vercel
+REM Terraform Docker wrapper script
 set "SCRIPT_DIR=%~dp0"
-docker run --rm ^
+docker run --rm -i ^
   -v "%SCRIPT_DIR%terraform:/workspace" ^
   -w /workspace ^
-  -e VERCEL_API_TOKEN=%VERCEL_API_TOKEN% ^
   hashicorp/terraform:latest %*
